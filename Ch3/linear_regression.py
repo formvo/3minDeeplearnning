@@ -8,7 +8,7 @@ y_data = [1, 2, 3]
 W = tf.Variable(tf.random_uniform([1], -1.0, 1.0))
 b = tf.Variable(tf.random_uniform([1], -1.0, 1.0))
 
-#각자 X, Y 의 이름을 가진 X, Y 플레이스홀더 설정
+#학습에 사용될 X,Y 플레이스홀더 설정
 X = tf.placeholder(tf.float32, name = "X")
 Y = tf.placeholder(tf.float32, name = "Y")
 
