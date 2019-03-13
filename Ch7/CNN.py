@@ -9,12 +9,13 @@ Y = tf.placeholder(tf.float32, [None, 10])
 keep_prob = tf.placeholder(tf.float32)
 
 #신경망 구현 & 드랍아웃 코드 추가(레이어, 뉴런의 비율)
-W1 = tf.Variable(tf.random_normal([3, 3, 1 ,32], stddev=0.01)) # [3 X 3 사이즈, 1개의 특징, 32개의 커널]
+W1 = tf.Variable(tf.random_normal([3, 3, 1 ,32], stddev=0.01)) # [3 X 3 커널 사이즈 , 1개의 특징, 32개의 커널]
 L1 = tf.nn.conv2d(X, W1, strides = [1, 1, 1, 1], padding='SAME') # padding : 보다 정확한 테두리 값 평가를 위해 외각을 한칸 밖으로 움직이는 옵션
 L1 = tf.nn.relu(L1)
+# 풀링 레이어
 L1 = tf.nn.max_pool(L1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 
-W2 = tf.Variable(tf.random_normal([3, 3, 32 ,64], stddev=0.01)) # [3 X 3 사이즈, 앞에서 구성한 컨볼루션 계층, 컨볼루션 계층에서 찾아낸 특징 수]
+W2 = tf.Variable(tf.random_normal([3, 3, 32 ,64], stddev=0.01)) # [3 X 3 커널 사이즈, 앞에서 구성한 컨볼루션 계층, 컨볼루션 계층에서 찾아낸 특징 수]
 L2 = tf.nn.conv2d(L1, W2, strides = [1, 1, 1, 1], padding='SAME')
 L2 = tf.nn.relu(L2)
 L2 = tf.nn.max_pool(L2, ksize=[1, 2, 2, 1], strides= [1, 2, 2, 1], padding='SAME')
@@ -47,6 +48,7 @@ for epoch in range(15):
 
     for i in range(total_batch):
         batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+        #데이터를 28 * 28 형태로 재구성
         batch_xs = batch_xs.reshape(-1, 28, 28, 1)
 
         _, cost_val = sess.run([optimizer, cost], feed_dict={X: batch_xs, Y: batch_ys, keep_prob: 0.7})

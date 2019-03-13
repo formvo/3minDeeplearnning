@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
+#데이터 불러오기
 data = np.loadtxt('D:/MachineLearning/3minDeeplearnning/3minDeeplearnning/data.csv', delimiter=',', unpack=True, dtype='float32')
 
 # 털, 날개, 기타, 포유류, 조류
