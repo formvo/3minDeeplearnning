@@ -5,24 +5,29 @@ import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("./mnist/data/", one_hot=True)
 
+#학습에 사용하는 하이퍼파라미터 초기화
 learning_rate = 0.01
 training_epoch = 20
 batch_size = 100
 n_hidden = 256
 n_input = 28*28
 
+#비지도 학습이므로 Y값(label값)은 없음
 X = tf.placeholder(tf.float32, [None, n_input])
 
+#인코더 구현
 W_encode = tf.Variable(tf.random_normal([n_input, n_hidden]))
 b_encode = tf.Variable(tf.random_normal([n_hidden]))
 
 encoder = tf.nn.sigmoid(tf.add(tf.matmul(X, W_encode), b_encode))
 
+#디코더 구현
 W_decode = tf.Variable(tf.random_normal([n_hidden, n_input]))
 b_decode = tf.Variable(tf.random_normal([n_input]))
 
 decoder = tf.nn.sigmoid(tf.add(tf.matmul(encoder, W_decode), b_decode))
 
+#cost최소화
 cost = tf.reduce_mean(tf.pow(X - decoder, 2))
 optimizer = tf.train.RMSPropOptimizer(learning_rate).minimize(cost)
 

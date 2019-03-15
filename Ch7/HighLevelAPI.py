@@ -19,7 +19,7 @@ L2 = tf.layers.dropout(L2, 0.7, is_training)
 
 # fully connected layer 구현
 L3 = tf.layers.flatten(L2)
-L3 = tf.layers.dense(L3, 256, activation=tf.nn.relu)
+L3 = tf.layers.dense(L3, 128, activation=tf.nn.relu)
 L3 = tf.layers.dropout(L3, 0.5, is_training)
 
 model = tf.layers.dense(L3, 10, activation=None)
@@ -37,7 +37,7 @@ batch_size = 100
 total_batch = int(mnist.train.num_examples / batch_size)
 
 # MNIST 15번 학습
-for epoch in range(15):
+for epoch in range(10):
     total_cost = 0
 
     for i in range(total_batch):
